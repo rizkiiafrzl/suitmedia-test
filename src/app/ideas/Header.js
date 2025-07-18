@@ -15,6 +15,7 @@ export default function Header() {
   const [show, setShow] = useState(true);
   const [lastScroll, setLastScroll] = useState(0);
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const ticking = useRef(false);
 
   useEffect(() => {
@@ -35,6 +36,15 @@ export default function Header() {
     // eslint-disable-next-line
   }, [lastScroll]);
 
+  // Tutup menu saat resize ke desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 600) setMenuOpen(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <header
       style={{
@@ -53,12 +63,21 @@ export default function Header() {
     >
       <div className="header-inner">
         {/* Logo */}
-        <div className="header-logo">
-          <span style={{ color: "#fff" }}>suit</span>
-          <span style={{ color: "#ffd600" }}>media</span>
+        <div className="header-logo" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <img src="/suitmedia_logo.png" alt="suitmedia logo" className="header-logo-img" />
         </div>
+        {/* Hamburger button (mobile only) */}
+        <button
+          className="header-hamburger"
+          aria-label="Open menu"
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          <span className="header-hamburger-bar" />
+          <span className="header-hamburger-bar" />
+          <span className="header-hamburger-bar" />
+        </button>
         {/* Menu */}
-        <nav className="header-menu">
+        <nav className={`header-menu${menuOpen ? ' open' : ''}`}>
           {MENU.map((item) => (
             <Link
               key={item.label}
@@ -72,6 +91,7 @@ export default function Header() {
                 transition: "color 0.2s",
                 textDecoration: "none",
               }}
+              onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </Link>

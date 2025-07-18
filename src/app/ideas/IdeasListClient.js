@@ -122,8 +122,10 @@ export default function IdeasListClient() {
             No ideas found.
           </div>
         ) : posts.map((item) => {
-          // Ambil url dari array gambar
-          let img = item.medium_image?.[0]?.url || item.small_image?.[0]?.url || '';
+          // Ambil url dari array gambar, fallback ke gambar default jika tidak ada
+          let img = (item.medium_image && item.medium_image[0] && item.medium_image[0].url)
+            || (item.small_image && item.small_image[0] && item.small_image[0].url)
+            || '/window.svg';
           if (img) img = `/api/image?url=${encodeURIComponent(img)}`;
           console.log('img:', img, 'medium:', item.medium_image, 'small:', item.small_image, 'title:', item.title);
           return (

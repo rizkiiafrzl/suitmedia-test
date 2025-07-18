@@ -242,3 +242,68 @@ body {
   text-align: center;
   pointer-events: none;
 }
+
+.header-logo-img {
+  height: 32px;
+  max-width: 120px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .header-logo-img {
+    height: 24px;
+    max-width: 80px;
+  }
+}
+
+.header-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 110;
+}
+.header-hamburger-bar {
+  width: 24px;
+  height: 3px;
+  background: #fff;
+  margin: 3px 0;
+  border-radius: 2px;
+  display: block;
+  transition: all 0.2s;
+}
+
+@media (max-width: 600px) {
+  .header-hamburger {
+    display: flex;
+  }
+  .header-menu {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: #ff6600;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 12px 24px 16px 24px;
+    display: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 109;
+  }
+  .header-menu.open {
+    display: flex;
+  }
+  .header-inner {
+    flex-direction: row;
+    align-items: center;
+    height: 64px;
+  }
+}
